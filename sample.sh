@@ -1,38 +1,35 @@
 #!/bin/bash
 
-# read app url
+# get download jetty url
 input=app_url.conf
 while IFS= read -r app_url
 do
-	echo "App URL: $app_url"
+  echo "'$app_url'"
 done < "$input"
 
 if [ -z ${app_url} ]
 then
-  echo "App download link is not found"
+  echo "app not found"
   read -p "Enter to exit" key_board
-  exit 1
+  exit 0
 else
   echo "App Link: '$app_url'"
 fi
 
-# download app file
+# download jetty
 curl -o `pwd`/aromacontroller.war "$app_url"
 
-# move app file into the server folder
+# move zip file
 file=`pwd`/aromacontroller.war
 if [ -f "$file" ]
 then
-  cp `pwd`/aromacontroller.war /opt/jetty/web/bbq/webapps
-  chown jetty:jetty /opt/jetty/web/bbq/webapps/aromacontroller.war
+  mkdir -p `pwd`/http-controller
+  mv `pwd`/aromacontroller.war `pwd`/http-controller
 else
-  echo "Download app failed"
+  echo "Download App failed"
   read -p "Enter to exit" key_board
   exit 1
 fi
-
-# restart Jetty
-/etc/init.d/jetty restart
 
 read -p "Done. Enter to exit" key_board
 exit 0

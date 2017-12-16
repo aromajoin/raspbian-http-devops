@@ -4,27 +4,44 @@
 input=jetty_url.conf
 while IFS= read -r jetty_url
 do
-	echo "Jetty URL: $jetty_url"
+	echo "$jetty_url"
 done < "$input"
+
+if [ -z ${jetty_url} ]
+then
+  echo "Jetty download link is not found"
+  read -p "Enter to exit" key_board
+  exit 1
+else
+  echo "Jetty Link: '$jetty_url'"
+fi
 
 # download jetty
 curl -o jetty.zip "$jetty_url"
 
 # move zip file
-mkdir -p /opt/jetty
-mv jetty.zip /opt/jetty
+file="./jetty.zip"
+if [ -f "$file" ]
+then
+  mkdir -p /opt/jetty
+  mv ./jetty.zip /opt/jetty
+else
+  echo "Download Jetty failed"
+  read -p "Enter to exit" key_board
+  exit 1
+fi
 
 # extract Jetty archive
 cd /opt/jetty
 unzip jetty.zip
-mv jetty-distribution-9.4.8.v20171121/ runtime
+mv jetty-distribution-*/ runtime
 rm jetty.zip
 
-# setup Jetty as a service
+# setup Jetty as a linux service with System V
 cp runtime/bin/jetty.sh /etc/init.d/jetty
 echo JETTY_HOME=`pwd`/runtime > /etc/default/jetty
 service jetty start
-if [ $? != 0 ]
+if [ $? == 0 ]
 then
   # Stop jetty service
   service jetty stop
@@ -49,4 +66,5 @@ echo "JETTY_BASE=/opt/jetty/web/bbq" >> /etc/default/jetty
 echo "TMPDIR=/opt/jetty/temp" >> /etc/default/jetty
 
 # Now Jetty run on default port 8080
-read -p "Enter to exit" key_board
+read -p "Done. Enter to exit" key_board
+exit 0
