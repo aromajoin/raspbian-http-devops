@@ -13,5 +13,5 @@ then
   ifconfig wlan0 up
 fi
 
-read -p "Enter to exit" key_board
+read -p "Done. Enter to exit" key_board
 exit 0

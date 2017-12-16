@@ -20,9 +20,13 @@ then
 
  if [ $? == 0 ]
  then
-  echo "Config wireless network interface."
+  echo "Config wireless network interface"
+ else
+  echo "Config wireless network fail"
+  read -p "Enter to exit" key_board
+  exit 1
  fi
 fi
 
-read -p "Enter to exit" key_board
+read -p "Done. Enter to exit" key_board
 exit 0
