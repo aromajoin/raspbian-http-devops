@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # IP for the checking server
 SERVER=8.8.8.8
 
@@ -14,4 +13,5 @@ then
   ifconfig wlan0 up
 fi
 
+read -p "Enter to exit" key_board
 exit 0

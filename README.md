@@ -22,18 +22,19 @@ Main features:
 * Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
     
     * `$sudo ./init_wifi_interface.sh`
-    * `$sudo ./set_wifi_credentials.sh`
+    * `$sudo ./setup_wifi_credentials.sh`
     * `$sudo ./restart_wifi_network.sh`
 
 * Step 3: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
 
 ## Install Jetty Server
 
-Just simply run the script:
+ * Step 1: Put jetty server link into the `jetty_url.conf`
+ * Step 2: Just simply run the script:
 
- * `$sudo ./setup_jetty.sh`
+    * `$sudo ./setup_jetty.sh`
 
-## Check/Start Server
+## Check/Start Web Server
 
 You can check Jetty service with:
 
@@ -45,6 +46,5 @@ If it is not running, then start:
 
 ## Deploy a webapp
 
- * Download .war file from URL.
- * Paste it into webapps/ folder of Jetty server
- * Restart Jetty with: `$sudo service jetty restart`
+ * Put app link into the `app_url.conf`
+ * Run script: `$sudo ./setup_controller_app.sh`

@@ -1,7 +1,14 @@
 #!/bin/bash
 
+# get download jetty url
+input=jetty_url.conf
+while IFS= read -r jetty_url
+do
+	echo "Jetty URL: $jetty_url"
+done < "$input"
+
 # download jetty
-curl -o jetty.zip http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.8.v20171121/jetty-distribution-9.4.8.v20171121.zip
+curl -o jetty.zip "$jetty_url"
 
 # move zip file
 mkdir -p /opt/jetty
@@ -42,3 +49,4 @@ echo "JETTY_BASE=/opt/jetty/web/bbq" >> /etc/default/jetty
 echo "TMPDIR=/opt/jetty/temp" >> /etc/default/jetty
 
 # Now Jetty run on default port 8080
+read -p "Enter to exit" key_board

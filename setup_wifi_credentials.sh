@@ -7,4 +7,5 @@ echo "ap_scan=1" >> /etc/wpa_supplicant/wpa_supplicant.conf
 
 cat ./wifi_credentials.conf >> /etc/wpa_supplicant/wpa_supplicant.conf
 
+read -p "Enter to exit" key_board
 exit 0

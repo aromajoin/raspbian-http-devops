@@ -24,4 +24,5 @@ then
  fi
 fi
 
+read -p "Enter to exit" key_board
 exit 0
