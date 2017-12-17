@@ -17,7 +17,7 @@ else
 fi
 
 # download jetty
-curl -o jetty.zip "$jetty_url"
+curl -sS jetty.zip "$jetty_url"
 
 # move zip file
 file="./jetty.zip"
