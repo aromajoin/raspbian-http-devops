@@ -1,7 +1,7 @@
 # Setup Wifi Connection and HTTP Server Deployment with Rasbian OS
 
 ## Purposes
-Setting up Wi-Fi automatically on Raspbian.
+Setting up DevOps env automatically on Raspbian.
 
 Project provides SHELL scripts that allows setting up Wi-Fi network and a HTTP server on Raspbian OS.
 
@@ -16,16 +16,19 @@ Main features:
 
 * Raspbian Stretch Lite OS
 
-## Setup Wi-Fi Connection
+## Setup Wi-Fi Network
 
 * Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
 * Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
     
     * `$sudo ./init_wifi_interface.sh`
     * `$sudo ./setup_wifi_credentials.sh`
-    * `$sudo ./restart_wifi_network.sh`
 
 * Step 3: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
+
+## Restart Wi-Fi Network
+
+* `$sudo ./restart_wifi_network.sh`
 
 ## Install Jetty Server
 
@@ -46,5 +49,5 @@ If it is not running, then start:
 
 ## Deploy a webapp
 
- * Put app link into the `app_url.conf`
- * Run script: `$sudo ./setup_controller_app.sh`
+ * Step 1: Put app link into the `app_url.conf`
+ * Step 2: Run script: `$sudo ./setup_controller_app.sh`
