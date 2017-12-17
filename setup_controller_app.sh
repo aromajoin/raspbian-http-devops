@@ -17,7 +17,7 @@ else
 fi
 
 # download app file
-curl -o `pwd`/aromacontroller.war "$app_url"
+curl -sS `pwd`/aromacontroller.war "$app_url"
 
 # move app file into the server folder
 file=`pwd`/aromacontroller.war
