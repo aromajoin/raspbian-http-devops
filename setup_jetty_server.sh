@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Java install
+sudo apt-get update && sudo apt-get install oracle-java8-jdk
+if [ $? != 0 ]; then                   
+  echo "Install Java 8: $? - Unsuccessful"
+  read -p "Enter to exit" key_board
+  exit 1
+fi
+
 # get download jetty url
 echo "==== Downloading Jetty ===="
 input=jetty_url.conf
