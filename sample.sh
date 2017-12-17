@@ -9,7 +9,7 @@ done < "$input"
 
 if [ -z ${app_url} ]
 then
-  echo "app not found"
+  echo "App not found"
   read -p "Enter to exit" key_board
   exit 0
 else
@@ -17,7 +17,7 @@ else
 fi
 
 # download jetty
-curl -o `pwd`/aromacontroller.war "$app_url"
+curl -sS `pwd`/aromacontroller.war "$app_url"
 
 # move zip file
 file=`pwd`/aromacontroller.war
@@ -26,10 +26,13 @@ then
   mkdir -p `pwd`/http-controller
   mv `pwd`/aromacontroller.war `pwd`/http-controller
 else
-  echo "Download App failed"
+  echo
+  echo "==== Download app failed ===="
   read -p "Enter to exit" key_board
   exit 1
 fi
 
+# wait input to exit program
+echo
 read -p "Done. Enter to exit" key_board
 exit 0

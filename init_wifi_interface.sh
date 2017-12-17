@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "==== Initial Wifi Interface ===="
 INTERFACE="wlan0"
 
 grep ${INTERFACE} /etc/network/interfaces > /dev/null
@@ -20,13 +21,15 @@ then
 
  if [ $? == 0 ]
  then
-  echo "Config wireless network interface"
+  echo "==== Config wireless network interface ===="
  else
-  echo "Config wireless network fail"
+  echo
+  echo "==== Config wireless network fail ===="
   read -p "Enter to exit" key_board
   exit 1
  fi
 fi
 
-read -p "Done. Enter to exit" key_board
+echo "==== Done ===="
+read -p "Enter to exit" key_board
 exit 0
