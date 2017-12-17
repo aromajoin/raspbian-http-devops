@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # get download jetty url
+echo "==== Downloading Jetty ===="
 input=jetty_url.conf
 while IFS= read -r jetty_url
 do
@@ -9,7 +10,7 @@ done < "$input"
 
 if [ -z ${jetty_url} ]
 then
-  echo "Jetty download link is not found"
+  echo "Jetty is not found"
   read -p "Enter to exit" key_board
   exit 1
 else
@@ -26,7 +27,8 @@ then
   mkdir -p /opt/jetty
   mv ./jetty.zip /opt/jetty
 else
-  echo "Download Jetty failed"
+  echo
+  echo "==== Download Jetty failed ===="
   read -p "Enter to exit" key_board
   exit 1
 fi
@@ -66,5 +68,6 @@ echo "JETTY_BASE=/opt/jetty/web/bbq" >> /etc/default/jetty
 echo "TMPDIR=/opt/jetty/temp" >> /etc/default/jetty
 
 # Now Jetty run on default port 8080
-read -p "Done. Enter to exit" key_board
+echo "==== Done ===="
+read -p "Enter to exit" key_board
 exit 0
