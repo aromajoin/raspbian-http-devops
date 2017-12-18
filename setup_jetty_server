@@ -10,7 +10,7 @@ fi
 
 # get download jetty url
 echo "==== Downloading Jetty ===="
-input=jetty_url.conf
+input=$HOME/bin/raspbian-http-devops/jetty_url.conf
 while IFS= read -r jetty_url
 do
 	echo "$jetty_url"
