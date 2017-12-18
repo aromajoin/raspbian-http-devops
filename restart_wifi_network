@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "==== Checking Network ===="
 # IP for the checking server
 SERVER=8.8.8.8
 
@@ -8,10 +9,12 @@ ping -c2 ${SERVER} > /dev/null
 # If the return code from ping ($?) is not 0 (means there was an error)
 if [ $? != 0 ]
 then
+  echo "==== Restart Wi-Fi ===="
   # Restart the wireless interface
   ifconfig wlan0 down
   ifconfig wlan0 up
 fi
 
-read -p "Done. Enter to exit" key_board
+echo "==== Done ===="
+read -p "Enter to exit" key_board
 exit 0
