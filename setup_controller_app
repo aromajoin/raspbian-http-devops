@@ -18,13 +18,13 @@ else
 fi
 
 # download app file
-curl -sS `pwd`/aromacontroller.war "$app_url"
+curl "$app_url" -o aromacontroller.war 
 
 # move app file into the server folder
-file=`pwd`/aromacontroller.war
+file="$HOME/bin/aromacontroller.war"
 if [ -f "$file" ]
 then
-  cp `pwd`/aromacontroller.war /opt/jetty/web/bbq/webapps
+  mv $HOME/bin/aromacontroller.war /opt/jetty/web/bbq/webapps
   chown jetty:jetty /opt/jetty/web/bbq/webapps/aromacontroller.war
 else
   echo
@@ -34,7 +34,15 @@ else
 fi
 
 # restart Jetty
-/etc/init.d/jetty restart
+echo "==== Restart server ===="
+sudo service jetty restart
+
+if [ $? != 0 ]
+then
+  echo "==== Failed to restart server ===="
+  read -p "Enter to exit" key_board
+  exit 1
+fi
 
 echo
 echo "==== Done ===="
