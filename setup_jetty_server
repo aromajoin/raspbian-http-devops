@@ -55,7 +55,7 @@ mv jetty-distribution-*/ runtime
 rm jetty.zip
 
 # setup Jetty as a linux service with System V
-cp runtime/bin/jetty.sh /etc/init.d/jetty
+cp /opt/jetty/runtime/bin/jetty.sh /etc/init.d/jetty
 echo JETTY_HOME=/opt/jetty/runtime > /etc/default/jetty
 service jetty start
 
@@ -66,7 +66,7 @@ then
 else
   echo "==== Jetty service failed ===="
   read -p "Enter to exit" key_board
-  exit 0
+  exit 1
 fi
 
 # automatically start Jetty
