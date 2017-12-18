@@ -36,7 +36,7 @@ fi
 
 # restart Jetty
 echo "==== Restart server ===="
-sudo service jetty restart
+service jetty restart
 
 if [ $? != 0 ]
 then
