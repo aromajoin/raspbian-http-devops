@@ -32,10 +32,11 @@ else
 fi
 
 # download jetty
-curl "$jetty_url" -o jetty.zip 
+curl "$jetty_url" -o $HOME/bin/jetty.zip 
 
 # move zip file
 file="$HOME/bin/jetty.zip"
+
 if [ -f "$file" ]
 then
   mkdir -p /opt/jetty
