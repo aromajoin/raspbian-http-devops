@@ -2,7 +2,7 @@
 
 echo "==== Download app ===="
 # read app url
-input=app_url.conf
+input=$HOME/bin/raspbian-http-devops/app_url.conf
 while IFS= read -r app_url
 do
   echo "App URL: $app_url"
