@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# Java install
-sudo apt-get update && sudo apt-get install oracle-java8-jdk
-if [ $? != 0 ]; then                   
-  echo "Install Java 8: $? - Unsuccessful"
-  read -p "Enter to exit" key_board
-  exit 1
-fi
+# Check java version
+echo "==== Java JDK ===="
+sudo javac -version
+if [ $? != 0 ]
+then
+  # Java install
+  sudo apt-get update && sudo apt-get install oracle-java8-jdk
+  if [ $? != 0 ]; then                   
+    echo "Install Java 8: $? - Unsuccessful"
+    read -p "Enter to exit" key_board
+    exit 1
+  fi
+fi 
 
 # get download jetty url
 echo "==== Downloading Jetty ===="
@@ -26,14 +32,14 @@ else
 fi
 
 # download jetty
-curl -sS $HOME/jetty.zip "$jetty_url"
+curl "$jetty_url" -o jetty.zip 
 
 # move zip file
-file="./jetty.zip"
+file="$HOME/bin/jetty.zip"
 if [ -f "$file" ]
 then
   mkdir -p /opt/jetty
-  mv $HOME/jetty.zip /opt/jetty
+  mv $HOME/bin/jetty.zip /opt/jetty
 else
   echo
   echo "==== Download Jetty failed ===="
@@ -49,12 +55,17 @@ rm jetty.zip
 
 # setup Jetty as a linux service with System V
 cp runtime/bin/jetty.sh /etc/init.d/jetty
-echo JETTY_HOME=`pwd`/runtime > /etc/default/jetty
+echo JETTY_HOME=/opt/jetty/runtime > /etc/default/jetty
 service jetty start
+
 if [ $? == 0 ]
 then
   # Stop jetty service
   service jetty stop
+else
+  echo "==== Jetty service failed ===="
+  read -p "Enter to exit" key_board
+  exit 0
 fi
 
 # automatically start Jetty
