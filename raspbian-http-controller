@@ -18,14 +18,14 @@ else
 fi
 
 # download app file
-curl "$app_url" -o $HOME/aromacontroller.war 
+curl "$app_url" -o aromacontroller.war
 
 # move app file into the server folder
 file="$HOME/aromacontroller.war"
 
 if [ -f "$file" ]
 then
-  mv $HOME/aromacontroller.war /opt/jetty/web/bbq/webapps
+  mv aromacontroller.war /opt/jetty/web/bbq/webapps
   chown jetty:jetty /opt/jetty/web/bbq/webapps/aromacontroller.war
 else
   echo
