@@ -1,15 +1,15 @@
-# Setup Wifi Connection and HTTP Server Deployment with Rasbian OS
+# Config Wi-Fi Network and Jetty Server Deployment on Raspbian OS
 
 ## Purposes
 
-Setting up DevOps env automatically on Raspbian OS.
+Setting up DevOps env automatically on Raspbian Stretch Lite.
 
-Project provides SHELL scripts that allows setting up Wi-Fi network and a HTTP server.
+Project provides SHELL scripts that allow setting up Wi-Fi network and Java Jetty server.
 
 Main features:
 
-- Config wifi network connection with given credentials automatically.
-- Install a Jetty HTTP server on Raspbian
+- Config Wi-Fi network connection with given credentials
+- Install a Jetty HTTP server
 
 ## System Context
 
@@ -39,7 +39,7 @@ Prepare SD Card of Raspbian OS following:
   - `sudo cp -a [local]/raspbian-http-devops/* [raspbian]/root/bin/`
 - Step 3: Finally, add the following line under `/root/.bashrc`
   - `export PATH="$HOME/bin:$PATH"`
-- Step 4: Don't forget make scripts execuable
+- Step 4: Don't forget make scripts executable
   - `sudo chmod +x /root/bin/raspbian-wifi-interface`
   - `sudo chmod +x /root/bin/raspbian-credential-wifi`
   - `sudo chmod +x /root/bin/raspbian-restart-wifi`
