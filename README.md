@@ -9,7 +9,8 @@ Project provides SHELL scripts that allow setting up Wi-Fi network and Java Jett
 Main features:
 
 - Config Wi-Fi network connection with given credentials
-- Install a Jetty HTTP server
+- Setup Jetty HTTP server
+- Deploy HTTP app into Jetty
 
 ## System Context
 
