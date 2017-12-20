@@ -55,7 +55,7 @@ Log in Raspbian OS as default user `pi:raspberry`
 
 Give you root's privileges with `sudo -s`
 
-### Setup Wi-Fi Network
+### Config Wi-Fi Network
 
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
 - Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
@@ -69,9 +69,9 @@ Give you root's privileges with `sudo -s`
 
 - `$sudo raspbian-restart-wifi`
 
-### Install Jetty Server
+### Setup Jetty Server
 
-- Step 1: Put jetty server link into the `jetty_url.conf`
+- Step 1: Put jetty server link into the `/usr/share/raspbian-http-devops/jetty_url.conf`
 - Step 2: Just simply run the script:
 
   - `$sudo raspbian-jetty-conf`
