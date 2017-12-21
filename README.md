@@ -40,11 +40,6 @@ Prepare SD Card of Raspbian OS following:
 - Step 3: Finally, add the following line under `/root/.bashrc`
   - `export PATH="$HOME/bin:$PATH"`
 - Step 4: Don't forget make scripts execuable
-  - `sudo chmod +x /root/bin/raspbian-wifi-interface`
-  - `sudo chmod +x /root/bin/raspbian-credential-wifi`
-  - `sudo chmod +x /root/bin/raspbian-restart-wifi`
-  - `sudo chmod +x /root/bin/raspbian-jetty-conf`
-  - `sudo chmod +x /root/bin/raspbian-http-controller`
 
 For now, you can run these scripts just like normal linux command.
 
@@ -58,11 +53,12 @@ Give you root's privileges with `sudo -s`
 
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
 - Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
-
   - `$sudo raspbian-wifi-interface`
+- Step 3: Update Wi-Fi network credentials
+  - `$nano /usr/share/raspbian-http-devops/wifi_credentials.conf`
   - `$sudo raspbian-credential-wifi`
 
-- Step 3: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
+- Step 4: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
 
 ### Restart Wi-Fi Network
 
@@ -70,7 +66,8 @@ Give you root's privileges with `sudo -s`
 
 ### Install Jetty Server
 
-- Step 1: Put jetty server link into the `jetty_url.conf`
+- Step 1: Put jetty server link
+  - `$nano /usr/share/raspbian-http-devops/jetty_url.conf`
 - Step 2: Just simply run the script:
 
   - `$sudo raspbian-jetty-conf`
@@ -87,5 +84,6 @@ If it is not running, then start:
 
 ### Deploy a webapp
 
-- Step 1: Put app link into the `/usr/share/raspbian-http-devops/app_url.conf`
-- Step 2: Run script: `$sudo raspbian-http-controller`
+- Step 1: Put app link into
+  - `$nano /usr/share/raspbian-http-devops/app_url.conf`
+- Step 2: Run `$sudo raspbian-http-controller`
