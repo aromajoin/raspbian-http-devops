@@ -6,7 +6,7 @@ Setting up DevOps env automatically on Raspbian Stretch Lite.
 
 Project provides SHELL scripts that allow setting up Wi-Fi network and Java Jetty server.
 
-## Main steps:
+## Main steps
 
 1. Config Wi-Fi network connection with given credentials
 2. Setup Jetty application server
@@ -35,20 +35,20 @@ Then, download our necessary files and scripts by using one of two approaches.
 ### 2. Copy directly to SD card which contains Raspbian OS
 
 - Step 1: Plug the SD card into your PC/Mac
-- Step 2: Create a folder in SD card to contain our scripts and files
-    ```bash
+- Step 2: Create a folder in SD card to contain our scripts and files  
+    ```
     sudo mkdir [raspbian]/root/bin
     ```
-- Step 3: Copy all SHELL scripts from this project and then paste them into the `/root/bin/`
-    ```bash
+- Step 3: Copy all SHELL scripts from this project and then paste them into the `/root/bin/`  
+    ```
     sudo cp -a [raspbian-http-devops-folder-path] [raspbian]/root/bin/
     ```
-- Step 4: Export environment variable by adding path to `/root/.bashrc`
-    ```bash
+- Step 4: Export environment variable by adding path to `/root/.bashrc`  
+    ```
     sudo export PATH="$HOME/bin:$PATH"
     ```
-- Step 5: Don't forget to make scripts execuable
-    ```bash
+- Step 5: Don't forget to make scripts execuable  
+    ```
     sudo chmod +x [script-file-path]
     ```
 
@@ -62,12 +62,12 @@ Give you root's privileges with `sudo -s`
 ### Configure Wi-Fi Network
 
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
-- Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
-    ```bash
+- Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:  
+    ```
     $sudo raspbian-wifi-interface
     ```
-- Step 3: Update Wi-Fi network credentials
-    ```bash
+- Step 3: Update Wi-Fi network credentials  
+    ```
     $nano /usr/share/raspbian-http-devops/wifi_credentials.conf
     $sudo raspbian-credential-wifi
     ```
@@ -81,31 +81,31 @@ $sudo raspbian-restart-wifi
 
 ### Setup Jetty Server
 
-- Step 1: Put jetty server link
-    ```bash
+- Step 1: Put jetty server link  
+    ```
     $nano /usr/share/raspbian-http-devops/jetty_url.conf
     ```
-- Step 2: Just simply run the script:
-    ```bash
+- Step 2: Just simply run the script  
+    ```
     $sudo raspbian-jetty-conf
     ```
 
 ### Check/Start Web Server
 
 You can check Jetty service with:
-```bash
+```
 $sudo service jetty status
 ```
 
 If it is not running, then start:
-```bash
+```
 $sudo service jetty start
 ```
 
 ### Deploy a webapp
 
-- Step 1: Put app link into
-    ```bash
+- Step 1: Put app link into  
+    ```
     $nano /usr/share/raspbian-http-devops/app_url.conf
     ```
 - Step 2: Run `$sudo raspbian-http-controller`
