@@ -25,12 +25,18 @@ Then, download our necessary files and scripts by using one of two approaches.
 
 ### 1. Via Debian/Raspbian package
 
-- Step 1: From Raspbian OS, download debian package
-  - `curl -o -L https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/raspbian-http-devops_1.1.0.deb`
-- Step 2: Add Debian arch for using multi arch
-  - `sudo dpkg --add-architecture amd64`
-- Step 3: Install Debian package
-  - `sudo dpkg -i raspbian-http-devops_1.1.0.deb`
+- Step 1: From Raspbian OS, download debian package  
+    ```
+    curl -o -L https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/raspbian-http-devops_1.1.0.deb
+    ```
+- Step 2: Add Debian arch for using multi arch  
+    ```
+    sudo dpkg --add-architecture amd64
+    ```
+- Step 3: Install Debian package  
+    ```
+    sudo dpkg -i raspbian-http-devops_1.1.0.deb
+    ```
 
 ### 2. Copy directly to SD card which contains Raspbian OS
 
@@ -75,7 +81,7 @@ Give you root's privileges with `sudo -s`
 
 ### Restart Wi-Fi Network
 
-```bash
+```
 $sudo raspbian-restart-wifi
 ```
 
