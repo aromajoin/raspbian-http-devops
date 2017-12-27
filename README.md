@@ -3,7 +3,25 @@
 ## Purposes
 
 Setting up production environment automatically for Java web application on Raspbian Stretch Lite.  
-Project provides shell scripts that allow setting up Wi-Fi network, Jetty web server and deploy Java web app.
+Project provides shell scripts that allow setting up Wi-Fi network, Jetty web server and deploy Java web app.### Configure Wi-Fi Network
+
+- Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
+- Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
+```Shell
+$sudo raspbian-wifi-interface
+```
+- Step 3: Update Wi-Fi network credentials
+```Shell
+$nano /usr/share/raspbian-http-devops/wifi_credentials.conf
+$sudo raspbian-credential-wifi
+```
+- Step 4: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
+
+### Restart Wi-Fi Network
+
+```Shell
+$sudo raspbian-restart-wifi
+```
 
 ## Production environment
 
@@ -19,7 +37,7 @@ In case of setting up WiFi at the first time.
 ### Configure Wi-Fi Network
 
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
-- Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
+- Step 2: Open terminal and run the following shell scripts:
 ```Shell
 $sudo raspbian-wifi-interface
 ```
