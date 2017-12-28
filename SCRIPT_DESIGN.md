@@ -8,31 +8,25 @@
 ## Usages
 
 ### Setup WiFi
+* Initialize WiFi interface
 * Ask users to input WiFi credential (SSID and password)
 * Connect WiFi
 * Check whether it is successful of not
 * Allow users to restart WiFi
 
+1. Initialize WiFi interface
+```bash
+$sudo ./wifi.sh init
+```
+
 1. Setup WiFi
 ```bash
-user@bash: ./wifi.sh
-SSID: user_input_ssid
-Password: user_input_password
-is it a hidden network?(y/n):
-Try to connect ...
-Connected successfully. IP address: 192.168.1.12
-user@bash: ... 
+$sudo ./wifi.sh setup
 ```
 
 2. Restart WiFi
 ```bash
-user@bash: ./wifi.sh restart
-SSID: user_input_ssid
-Password: user_input_password
-is it a hidden network?(y/n):
-Try to connect ...
-Connected succefully. IP address: 192.168.1.12 
-user@bash: ...
+$sudo ./wifi.sh restart
 ```
 
 ### Setup Jetty server
@@ -42,7 +36,7 @@ user@bash: ...
 * Set the service automatically runs every time Raspberry Pi is powered on
 
 ```bash
-user@bash: ./install-jetty.sh
+$sudo ./install-jetty.sh
 ``` 
 
 ### Deploy AromaController app
@@ -53,5 +47,5 @@ user@bash: ./install-jetty.sh
 * Show message
 
 ```bash
-user@bash: ./install-controller-app.sh
+$sudo ./install-controller-app.sh
 ``` 
