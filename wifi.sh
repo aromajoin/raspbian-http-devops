@@ -107,6 +107,7 @@ elif [ "$MODE" = "restart" ]; then
     restart
 else 
     echo -e "Can not understand command. 
+    \t- Use 'init' to initialize WiFi configuration.
     \t- Use 'setup' to set up new WiFi configuration.
     \t- Use 'restart' to restart WiFi connection."
 fi
