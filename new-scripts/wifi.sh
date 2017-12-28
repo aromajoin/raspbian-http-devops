@@ -43,24 +43,23 @@ setup () {
 
 # Restart WiFi
 restart () {
-    echo "==== Checking Network ===="
+    echo "Checking network ..."
     # IP for the checking server
     SERVER=8.8.8.8
 
     ping -c2 ${SERVER} > /dev/null
-
+    
     # If the return code from ping ($?) is not 0 (means there was an error)
-    if [ $? != 0 ]
-    then
-    echo "==== Restart Wi-Fi ===="
-    # Restart the wireless interface
-    ifconfig wlan0 down
-    ifconfig wlan0 up
+    if [ $? != 0 ]; then
+        echo "Restarting WiFi connection ... "
+        # Restart the wireless interface
+        ifconfig wlan0 down
+        ifconfig wlan0 up
+        echo "WiFi is restarted successfully."
+    else
+        echo "There is an error occurred."
+        echo "Can not restart WiFi connection."
     fi
-
-    echo "==== Done ===="
-    read -p "Enter to exit" key_board
-    exit 0
 }
 
 if [ "$MODE" = "setup" ]; then
