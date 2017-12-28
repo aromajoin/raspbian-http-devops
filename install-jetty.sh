@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Init option variables
+while getopts l: option
+do
+ case "${option}"
+ in
+ l) URL=${OPTARG};;
+ esac
+done
+
 # Check java version
 echo "Checking Java availability ..."
 javac -version
@@ -17,7 +26,7 @@ fi
 
 # Download Jetty
 echo "Start downloading Jetty ..."
-JETTY_DOWNLOAD_URL=http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.8.v20171121/jetty-distribution-9.4.8.v20171121.zip
+JETTY_DOWNLOAD_URL=${URL:=http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.8.v20171121/jetty-distribution-9.4.8.v20171121.zip}
 JETTY_DESTINATION_FILE=/opt/jetty/jetty.zip
 mkdir /opt/jetty
 curl "$JETTY_DOWNLOAD_URL" -o $JETTY_DESTINATION_FILE

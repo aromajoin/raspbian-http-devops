@@ -5,23 +5,25 @@ MODE=$1
 init () {
     echo "Initialize WiFi interface"
     INTERFACE="wlan0"
+    WIFI_INTERFACE_FILE=/etc/network/interfaces
 
-    grep ${INTERFACE} /etc/network/interfaces > /dev/null
+    grep ${INTERFACE} $WIFI_INTERFACE_FILE > /dev/null
 
     # If returns 0, it means have errors
     if [ $? != 0 ]
     then
-        echo "auto lo" >> /etc/network/interfaces
-        echo >> /etc/network/interfaces
-        echo "iface lo inet loopback" >> /etc/network/interfaces
-        echo "iface eth0 inet dhcp" >> /etc/network/interfaces
-        echo >> /etc/network/interfaces
-        echo "allow-hotplug wlan0" >> /etc/network/interfaces
-        echo "auto wlan0" >> /etc/network/interfaces
-        echo "iface wlan0 inet dhcp" >> /etc/network/interfaces
-        echo "wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf" >> /etc/network/interfaces
-        echo >> /etc/network/interfaces
-        echo "iface default inet dhcp" >> /etc/network/interfaces
+        # Add wireless interface network into the configuration file.
+        echo "auto lo" >> $WIFI_INTERFACE_FILE
+        echo >> $WIFI_INTERFACE_FILE
+        echo "iface lo inet loopback" >> $WIFI_INTERFACE_FILE
+        echo "iface eth0 inet dhcp" >> $WIFI_INTERFACE_FILE
+        echo >> $WIFI_INTERFACE_FILE
+        echo "allow-hotplug wlan0" >> $WIFI_INTERFACE_FILE
+        echo "auto wlan0" >> $WIFI_INTERFACE_FILE
+        echo "iface wlan0 inet dhcp" >> $WIFI_INTERFACE_FILE
+        echo "wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf" >> $WIFI_INTERFACE_FILE
+        echo >> $WIFI_INTERFACE_FILE
+        echo "iface default inet dhcp" >> $WIFI_INTERFACE_FILE
 
         ifconfig wlan0 up
 
@@ -106,7 +108,7 @@ elif [ "$MODE" = "setup" ]; then
 elif [ "$MODE" = "restart" ]; then
     restart
 else 
-    echo -e "Can not understand command. 
+    echo -e "Can not identify command. 
     \t- Use 'init' to initialize WiFi configuration.
     \t- Use 'setup' to set up new WiFi configuration.
     \t- Use 'restart' to restart WiFi connection."
