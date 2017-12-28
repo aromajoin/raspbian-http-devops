@@ -5,14 +5,14 @@ echo "Checking Java availability ..."
 javac -version
 if [ $? != 0 ]
 then
-  # Java install
-  echo "Java is not installed yet."
-  echo "Installing Java ..."
-  apt-get update && sudo apt-get install oracle-java8-jdk
-  if [ $? != 0 ]; then                   
-    echo "Failed to Java 8: $?"
-    exit 1
-  fi
+    # Java install
+    echo "Java is not installed yet."
+    echo "Installing Java ..."
+    apt-get update && sudo apt-get install oracle-java8-jdk
+    if [ $? != 0 ]; then                   
+        echo "Failed to Java 8: $?"
+        exit 1
+    fi
 fi 
 
 # Download Jetty
@@ -25,11 +25,11 @@ curl "$JETTY_DOWNLOAD_URL" -o $JETTY_DESTINATION_FILE
 # Move zip file
 if [ -f "$JETTY_DESTINATION_FILE" ]
 then
-  echo "Complete downloading."
+    echo "Complete downloading."
 else
-  echo
-  echo "Failed to download Jetty."
-  exit 1
+    echo
+    echo "Failed to download Jetty."
+    exit 1
 fi
 
 # Extract Jetty file archive
@@ -46,12 +46,12 @@ service jetty start
 
 if [ $? == 0 ]
 then
-  # Succeed. Stop service
-  service jetty stop
+    # Succeed. Stop service
+    service jetty stop
 else
-  # Failed
-  echo "Failed to set Jetty as a service"
-  exit 1
+    # Failed
+    echo "Failed to set Jetty as a service"
+    exit 1
 fi
 
 # Automatically start Jetty

@@ -10,12 +10,12 @@ curl "$APP_FILE_URL" -o $DESTINATION_FILE
 # move app file into the server folder
 if [ -f "$DESTINATION_FILE" ]
 then
-  mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps
-  chown jetty:jetty /opt/jetty/web/bbq/webapps/aromacontroller.war
+    mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps
+    chown jetty:jetty /opt/jetty/web/bbq/webapps/aromacontroller.war
 else
-  echo
-  echo "Failed to download file."
-  exit 1
+    echo
+    echo "Failed to download file."
+    exit 1
 fi
 
 # restart Jetty
@@ -24,8 +24,8 @@ service jetty restart
 
 if [ $? != 0 ]
 then
-  echo "Failed to restart sever."
-  exit 1
+    echo "Failed to restart sever."
+    exit 1
 fi
 
 echo
