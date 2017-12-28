@@ -44,5 +44,5 @@ then
 fi
 
 echo
-echo "Completed. App is served at: localhost:8080"
+echo "Completed."
 exit 0

@@ -3,25 +3,7 @@
 ## Purposes
 
 Setting up production environment automatically for Java web application on Raspbian Stretch Lite.  
-Project provides shell scripts that allow setting up Wi-Fi network, Jetty web server and deploy Java web app.### Configure Wi-Fi Network
-
-- Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
-- Step 2: Open a Terminal session by clicking on the LXTerminal icon, and run the following SHELL scripts:
-```Shell
-$sudo raspbian-wifi-interface
-```
-- Step 3: Update Wi-Fi network credentials
-```Shell
-$nano /usr/share/raspbian-http-devops/wifi_credentials.conf
-$sudo raspbian-credential-wifi
-```
-- Step 4: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
-
-### Restart Wi-Fi Network
-
-```Shell
-$sudo raspbian-restart-wifi
-```
+Project provides shell scripts that allow setting up Wi-Fi network, Jetty web server and deploy Java web app.
 
 ## Production environment
 
@@ -39,19 +21,18 @@ In case of setting up WiFi at the first time.
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
 - Step 2: Open terminal and run the following shell scripts:
 ```Shell
-$sudo raspbian-wifi-interface
+$sudo ./config-wifi init
 ```
-- Step 3: Update Wi-Fi network credentials
+- Step 3: Setup Wi-Fi network credentials
 ```Shell
-$nano /usr/share/raspbian-http-devops/wifi_credentials.conf
-$sudo raspbian-credential-wifi
+$sudo ./config-wifi setup
 ```
 - Step 4: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
 
 ### Restart Wi-Fi Network
 
 ```Shell
-$sudo raspbian-restart-wifi
+$sudo ./config-wifi restart
 ```
 
 ## Deploy Java web application
@@ -62,7 +43,7 @@ $sudo raspbian-restart-wifi
 We will use shell scripts to make the installation and setting up steps easier. They can be graped by one of two following ways.
 
 ### 1. Via Debian/Raspbian package
-If you already connect Raspberry Pi to the internet, you can download it from remote source (it is useful when we update these scripts remotely).  
+If you already connect Raspberry Pi to the internet, you can download it from remote source (it is useful when we update these scripts remotely).
 
 - Step 1: From command line, download debian package
 ```Shell
@@ -107,13 +88,10 @@ Give you root's privileges with `sudo -s`
 
 ### Setup Jetty Server
 
-- Step 1: Put jetty server link
+Just simply run the script
+
 ```Shell
-$nano /usr/share/raspbian-http-devops/jetty_url.conf
-```
-- Step 2: Just simply run the script
-```Shell
-$sudo raspbian-jetty-conf
+$sudo ./install-jetty
 ```
 
 ### Check/Start Web Server
@@ -132,11 +110,8 @@ $sudo service jetty start
 
 ### Deploy a webapp
 
-- Step 1: Put app link into
+Run command
+
 ```Shell
-$nano /usr/share/raspbian-http-devops/app_url.conf
-```
-- Step 2: Run command
-```Shell
-$sudo raspbian-http-controller
+$sudo ./install-app -l [webapp-download-link] -n [webapp-name]
 ```

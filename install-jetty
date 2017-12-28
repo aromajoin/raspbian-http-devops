@@ -31,7 +31,6 @@ JETTY_DESTINATION_FILE=/opt/jetty/jetty.zip
 mkdir /opt/jetty
 curl "$JETTY_DOWNLOAD_URL" -o $JETTY_DESTINATION_FILE
 
-# Move zip file
 if [ -f "$JETTY_DESTINATION_FILE" ]
 then
     echo "Complete downloading."

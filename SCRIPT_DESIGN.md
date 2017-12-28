@@ -1,9 +1,9 @@
 # Script design
 
 3 necessary scripts
-* Setup WiFi: ./wifi.sh
-* Setup Jetty: ./install-jetty.sh
-* Deploy AromaController app: ./install-controller-app.sh
+* Setup WiFi: ./config-wifi
+* Setup Jetty: ./install-jetty
+* Deploy Web app: ./install-app
 
 ## Usages
 
@@ -16,17 +16,17 @@
 
 1. Initialize WiFi interface
 ```bash
-$sudo ./wifi.sh init
+$sudo ./config-wifi init
 ```
 
 1. Setup WiFi
 ```bash
-$sudo ./wifi.sh setup
+$sudo ./config-wifi setup
 ```
 
 2. Restart WiFi
 ```bash
-$sudo ./wifi.sh restart
+$sudo ./config-wifi restart
 ```
 
 ### Setup Jetty server
@@ -36,7 +36,7 @@ $sudo ./wifi.sh restart
 * Set the service automatically runs every time Raspberry Pi is powered on
 
 ```bash
-$sudo ./install-jetty.sh
+$sudo ./install-jetty
 ``` 
 
 ### Deploy AromaController app
@@ -47,5 +47,5 @@ $sudo ./install-jetty.sh
 * Show message
 
 ```bash
-$sudo ./install-controller-app.sh
+$sudo ./install-app
 ``` 
