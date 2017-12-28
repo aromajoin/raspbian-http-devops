@@ -19,10 +19,9 @@ setup () {
     fi
 
     WIFI_CREDENTIAL="network={
-        ssid=\"$SSID\"
-        psk=\"$PASSWORD\"
-        scan_ssid=$HIDDEN
-    }"
+    ssid=\"$SSID\"
+    psk=\"$PASSWORD\"
+    scan_ssid=$HIDDEN\r}"
 
     WIFI_CONFIG_FILE_URL=/etc/wpa_supplicant/wpa_supplicant.conf
     # Put configuration into network config file.
