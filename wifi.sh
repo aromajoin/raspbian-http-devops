@@ -1,6 +1,43 @@
 #!/bin/bash
 MODE=$1
 
+# Initialize WiFi
+init () {
+    echo "Initialize WiFi interface"
+    INTERFACE="wlan0"
+
+    grep ${INTERFACE} /etc/network/interfaces > /dev/null
+
+    # If returns 0, it means have errors
+    if [ $? != 0 ]
+    then
+        echo "auto lo" >> /etc/network/interfaces
+        echo >> /etc/network/interfaces
+        echo "iface lo inet loopback" >> /etc/network/interfaces
+        echo "iface eth0 inet dhcp" >> /etc/network/interfaces
+        echo >> /etc/network/interfaces
+        echo "allow-hotplug wlan0" >> /etc/network/interfaces
+        echo "auto wlan0" >> /etc/network/interfaces
+        echo "iface wlan0 inet dhcp" >> /etc/network/interfaces
+        echo "wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf" >> /etc/network/interfaces
+        echo >> /etc/network/interfaces
+        echo "iface default inet dhcp" >> /etc/network/interfaces
+
+        ifconfig wlan0 up
+
+        if [ $? == 0 ]
+        then
+            echo "Configure network interface"
+        else
+            echo
+            echo "Failed to configure network."
+            exit 1
+        fi
+    fi
+
+    echo "Complete successfully."
+}
+
 # Setup wifi
 setup () {
     # Ask user to input information
@@ -62,7 +99,9 @@ restart () {
     fi
 }
 
-if [ "$MODE" = "setup" ]; then
+if [ "$MODE" = "init" ]; then
+    init
+elif [ "$MODE" = "setup" ]; then
     setup
 elif [ "$MODE" = "restart" ]; then
     restart
