@@ -16,6 +16,7 @@ Project provides shell scripts that allow setting up Wi-Fi network, Jetty web se
 2. Connect Raspberry to the internet using Ethernet cable or WiFi (it needs to setup via command line.)
 
 In case of setting up WiFi at the first time.
+
 ### Configure Wi-Fi Network
 
 - Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
@@ -43,6 +44,7 @@ $sudo ./config-wifi restart
 We will use shell scripts to make the installation and setting up steps easier. They can be graped by one of two following ways.
 
 ### 1. Via Debian/Raspbian package
+
 If you already connect Raspberry Pi to the internet, you can download it from remote source (it is useful when we update these scripts remotely).
 
 - Step 1: From command line, download debian package
@@ -108,7 +110,7 @@ If it is not running, then start:
 $sudo service jetty start
 ```
 
-### Deploy a webapp
+### Deploy Java Web App
 
 Run command
 
