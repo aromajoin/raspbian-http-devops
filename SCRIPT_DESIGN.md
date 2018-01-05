@@ -1,6 +1,7 @@
 # Script design
 
-3 necessary scripts
+3 necessary scripts  
+
 * Setup WiFi: ./config-wifi
 * Setup Jetty: ./install-jetty
 * Deploy Web app: ./install-app
@@ -14,17 +15,19 @@
 * Check whether it is successful of not
 * Allow users to restart WiFi
 
-1. Initialize WiFi interface
+**Functions**
+
+* Initialize WiFi interface
 ```bash
 $sudo ./config-wifi init
 ```
 
-1. Setup WiFi
+* Setup WiFi
 ```bash
 $sudo ./config-wifi setup
 ```
 
-2. Restart WiFi
+* Restart WiFi
 ```bash
 $sudo ./config-wifi restart
 ```
