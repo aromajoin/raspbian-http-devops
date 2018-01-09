@@ -41,13 +41,13 @@ $sudo ./config-wifi restart
 1. Setup Jetty application server
 2. Install Java web app on Jetty server
 
-We will use shell scripts to make the installation and setting up steps easier. They can be graped by one of two following ways.
+We will use shell scripts to make the installation and setting up steps easier. They can be grabbed by one of two following ways.
 
 ### 1. Via Debian/Raspbian package
 
 If you already connect Raspberry Pi to the internet, you can download it from remote source (it is useful when we update these scripts remotely).
 
-- Step 1: From command line, download debian package
+- Step 1: From command line, download Debian package
 ```Shell
 $curl -o -L https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/raspbian-http-devops_1.1.0.deb
 ```
@@ -75,7 +75,7 @@ $sudo cp -a [raspbian-http-devops-folder-path] [raspbian]/root/bin/
 ```Shell
 $sudo export PATH="$HOME/bin:$PATH"
 ```
-- Step 5: Don't forget to make scripts execuable
+- Step 5: Don't forget to make scripts executable
 ```Shell
 $sudo chmod +x [script-file-path]
 ```
