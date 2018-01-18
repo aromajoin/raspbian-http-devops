@@ -1,85 +1,91 @@
 #!/bin/bash
 
-# Init option variables
-while getopts l: option
-do
- case "${option}"
- in
- l) URL=${OPTARG};;
- esac
-done
+JETTY_DOWNLOAD_URL=${URL:=http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.8.v20171121/jetty-distribution-9.4.8.v20171121.zip}
+JETTY_DESTINATION_FILE=/opt/jetty/jetty.zip
 
-# Check java version
-echo "Checking Java availability ..."
-javac -version
-if [ $? != 0 ]
-then
+main()
+{
+  # Init option variables
+  while getopts l: option
+  do
+  case "${option}"
+  in
+  l) URL=${OPTARG};;
+  esac
+  done
+
+  # Check java version
+  echo "Checking Java availability ..."
+  javac -version
+  if [ $? != 0 ]
+  then
     # Java install
     echo "Java is not installed yet."
     echo "Installing Java ..."
     apt-get update && sudo apt-get install oracle-java8-jdk
     if [ $? != 0 ]; then                   
-        echo "Failed to Java 8: $?"
-        exit 1
+      echo "Failed to Java 8: $?"
+      exit 1
     fi
-fi 
+  fi 
 
-# Download Jetty
-echo "Start downloading Jetty ..."
-JETTY_DOWNLOAD_URL=${URL:=http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.8.v20171121/jetty-distribution-9.4.8.v20171121.zip}
-JETTY_DESTINATION_FILE=/opt/jetty/jetty.zip
-mkdir /opt/jetty
-curl "$JETTY_DOWNLOAD_URL" -o $JETTY_DESTINATION_FILE
+  # Download Jetty
+  echo "Start downloading Jetty ..."
+  mkdir /opt/jetty
+  curl "$JETTY_DOWNLOAD_URL" -o $JETTY_DESTINATION_FILE
 
-if [ -f "$JETTY_DESTINATION_FILE" ]
-then
+  if [ -f "$JETTY_DESTINATION_FILE" ]
+  then
     echo "Complete downloading."
-else
+  else
     echo
     echo "Failed to download Jetty."
     exit 1
-fi
+  fi
 
-# Extract Jetty file archive
-cd /opt/jetty
-unzip jetty.zip
-mv jetty-distribution-*/ runtime
-rm jetty.zip
+  # Extract Jetty file archive
+  cd /opt/jetty
+  unzip jetty.zip
+  mv jetty-distribution-*/ runtime
+  rm jetty.zip
 
-# Setup Jetty as a Linux service
-cp /opt/jetty/runtime/bin/jetty.sh /etc/init.d/jetty
-echo JETTY_HOME=/opt/jetty/runtime > /etc/default/jetty
-# Test if it is set up successfully
-service jetty start
+  # Setup Jetty as a Linux service
+  cp /opt/jetty/runtime/bin/jetty.sh /etc/init.d/jetty
+  echo JETTY_HOME=/opt/jetty/runtime > /etc/default/jetty
+  # Test if it is set up successfully
+  service jetty start
 
-if [ $? == 0 ]
-then
+  if [ $? == 0 ]
+  then
     # Succeed. Stop service
     service jetty stop
-else
+  else
     # Failed
     echo "Failed to set Jetty as a service"
     exit 1
-fi
+  fi
 
-# Automatically start Jetty
-update-rc.d jetty defaults
+  # Automatically start Jetty
+  update-rc.d jetty defaults
 
-# Configure Jetty to run with a 'jetty' user
-mkdir -p /opt/jetty/web/bbq
-mkdir -p /opt/jetty/temp
-useradd --user-group --shell /bin/false --home-dir /opt/jetty/temp jetty
+  # Configure Jetty to run with a 'jetty' user
+  mkdir -p /opt/jetty/web/bbq
+  mkdir -p /opt/jetty/temp
+  useradd --user-group --shell /bin/false --home-dir /opt/jetty/temp jetty
 
-# Setup Jetty base configuration
-cd /opt/jetty/web/bbq
-java -jar /opt/jetty/runtime/start.jar --add-to-start=deploy,http,console-capture
+  # Setup Jetty base configuration
+  cd /opt/jetty/web/bbq
+  java -jar /opt/jetty/runtime/start.jar --add-to-start=deploy,http,console-capture
 
-# Wrap configuration of Jetty service
-chown -R jetty:jetty /opt/jetty
-echo "JETTY_HOME=/opt/jetty/runtime" > /etc/default/jetty
-echo "JETTY_BASE=/opt/jetty/web/bbq" >> /etc/default/jetty
-echo "TMPDIR=/opt/jetty/temp" >> /etc/default/jetty
+  # Wrap configuration of Jetty service
+  chown -R jetty:jetty /opt/jetty
+  echo "JETTY_HOME=/opt/jetty/runtime" > /etc/default/jetty
+  echo "JETTY_BASE=/opt/jetty/web/bbq" >> /etc/default/jetty
+  echo "TMPDIR=/opt/jetty/temp" >> /etc/default/jetty
 
-# Now Jetty run on default port 8080
-echo "Successfully! Jetty is now running at: http://localhost:8080"
-exit 0
+  # Now Jetty run on default port 8080
+  echo "Successfully! Jetty is now running at: http://localhost:8080"
+  exit 0
+}
+
+main
