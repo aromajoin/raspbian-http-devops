@@ -28,7 +28,7 @@ main()
   if [ -f "$DESTINATION_FILE" ]
   then
     mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps
-    chown jetty:jetty /opt/jetty/web/bbq/webapps/{$APP_FILE}
+    chown jetty:jetty /opt/jetty/web/bbq/webapps/$APP_FILE
   else
     echo
     echo "Failed to download file."
