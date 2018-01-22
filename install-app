@@ -1,23 +1,35 @@
 #!/bin/bash
 
-# Read app url
-APP_FILE_URL=${URL:=https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/sample.war}
-
-APP_FILE=${NAME:=sample.war}
-
-DESTINATION_FILE=$HOME/$APP_FILE
+# Handle option arguments
+while getopts ":l:n:" opt; do
+  case $opt in
+    l)
+      URL=$OPTARG
+      echo "Download link: $URL" >&2
+      ;;
+    n)
+      NAME=$OPTARG
+      echo "File: $NAME" >&2
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 main()
 {
-  # Init option variables
-  while getopts l:n: option
-  do
-  case "${option}"
-  in
-  l) URL=${OPTARG};;
-  n) NAME=${OPTARG};;
-  esac
-  done
+  # Read app url
+  APP_FILE_URL=${URL:-https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/sample.war}
+
+  APP_FILE=${NAME:-sample.war}
+
+  DESTINATION_FILE=$HOME/$APP_FILE
 
   echo "Start downloading ${APP_FILE} from: ${APP_FILE_URL}"
 
