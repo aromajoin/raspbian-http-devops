@@ -27,7 +27,7 @@ main()
   # Read app url
   APP_FILE_URL=${URL:-https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/sample.war}
 
-  APP_FILE=${NAME:-aromacontroller.war}
+  APP_FILE=${NAME:-sample.war}
 
   DESTINATION_FILE=$HOME/$APP_FILE
 
