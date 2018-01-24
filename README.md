@@ -28,6 +28,8 @@ We will use shell scripts to make the installation and setting up steps easier. 
 $scp -r [raspbian-http-devops-folder-path] pi@raspberry.local:/home/pi
 ```
 
+*Note: In case of accessing SSH at the first time. You might need to read the guides [here.](/ssh-to-raspberry-via-usb.md)*
+
 ### 2. Copy directly to SD card which contains Raspbian OS
 
 - Step 1: Plug the SD card into your PC/Mac
@@ -57,7 +59,17 @@ $sudo chmod +x [script-file-path]
 
 For now, you can run these scripts just like normal linux command.
 
-In case of setting up WiFi at the first time.
+## Deploy Java web application
+
+1. Setup Jetty application server
+
+2. Install Java web app on Jetty server
+
+## Usages
+
+Access via SSH, then log in Raspbian OS as default user `pi:raspberry`
+
+**In case of setting up Wi-Fi at the first time.**
 
 ### Configure Wi-Fi Network
 
@@ -82,18 +94,6 @@ $sudo ./config-wifi setup
 ```Shell
 $sudo ./config-wifi restart
 ```
-
-## Deploy Java web application
-
-1. Setup Jetty application server
-
-2. Install Java web app on Jetty server
-
-## Usages
-
-Log in Raspbian OS as default user `pi:raspberry`
-
-Give you root's privileges with `sudo -s`
 
 ### Setup Jetty Server
 
