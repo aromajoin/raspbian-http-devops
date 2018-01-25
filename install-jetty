@@ -70,8 +70,7 @@ main()
     service jetty stop
   else
     # Failed
-    echo "Failed to set Jetty as a service"
-    exit 1
+    echo "Please, restart Jetty service."
   fi
 
   # Automatically start Jetty

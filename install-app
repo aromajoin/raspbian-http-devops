@@ -39,7 +39,7 @@ main()
   # Move app file into the server folder
   if [ -f "$DESTINATION_FILE" ]
   then
-    mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps
+    mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps/
     chown jetty:jetty /opt/jetty/web/bbq/webapps/$APP_FILE
   else
     echo

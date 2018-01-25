@@ -16,108 +16,60 @@ Project provides shell scripts that allow setting up Wi-Fi network, Jetty web se
 
 ### 2. Config SSH access - Only RaspberryPi Zero
 
-- If you are using RaspberryPi Zero, to enable accessing SSH 
-- Boot up RaspberryPi
-- Access/Check SSH via `pi@raspberry.local`
-- Copy all scripts from local to RaspberryPi
+- With RaspberryPi Zero, you might need to read the guides [here.](/ssh-to-raspberry-via-usb.md)
+- With RaspberryPi 3 Model, open up the boot partition and create a new file simply called `ssh` in the SD card. By default SSH is disabled so this is required to enable it.
+- Check SSH via `pi@raspberry.local` with default password `raspberry`
+
+### 3. Copy all scripts from local to RaspberryPi with SCP command
 
 ```Shell
-$scp -r [raspbian-http-devops-folder-path] pi@raspberry.local:/home/pi
+  $scp -r [raspbian-http-devops-folder-path] pi@raspberry.local:/home/pi
 ```
 
-*Note: In case of accessing SSH at the first time. You might need to read the guides [here.](/ssh-to-raspberry-via-usb.md)*
-
-### 2. Copy directly to SD card which contains Raspbian OS
-
-- Step 1: Plug the SD card into your PC/Mac
-- Step 2: Create a folder in SD card to contain our scripts and files
+### 4. Login RaspberryPi terminal via SSH
 
 ```Shell
-$sudo mkdir [raspbian]/root/bin
+  $ssh pi@raspberry.local
 ```
 
-- Step 3: Copy all SHELL scripts from this project and then paste them into the `/root/bin/`
+with default password `raspberry`
+
+### 5. Configure Wi-Fi Network
+
+In the terminal
 
 ```Shell
-$sudo cp -a [raspbian-http-devops-folder-path] [raspbian]/root/bin/
+  $sudo raspi-config
 ```
 
-- Step 4: Export environment variable by adding path to `/root/.bashrc`
+Then choose `Network Options` to configure network settings.
 
-```Shell
-$sudo export PATH="$HOME/bin:$PATH"
-```
+Note: *After setting, shut down your Raspberry Pi, and start it up again. You should find that the Raspberry Pi connects using the WiFi as it boots up.*
 
-- Step 5: Don't forget to make scripts executable
-
-```Shell
-$sudo chmod +x [script-file-path]
-```
-
-For now, you can run these scripts just like normal linux command.
-
-## Deploy Java web application
-
-1. Setup Jetty application server
-
-2. Install Java web app on Jetty server
-
-## Usages
-
-Access via SSH, then log in Raspbian OS as default user `pi:raspberry`
-
-**In case of setting up Wi-Fi at the first time.**
-
-### Configure Wi-Fi Network
-
-- Step 1: Boot the Raspberry Pi without the WiFi adapter plugged in.
-
-- Step 2: Open terminal and run the following shell scripts:
-
-```Shell
-$sudo ./config-wifi init
-```
-
-- Step 3: Setup Wi-Fi network credentials
-
-```Shell
-$sudo ./config-wifi setup
-```
-
-- Step 4: Shut down your Raspberry Pi, plug the WiFi adapter in and start it up again. You should find that the Raspberry Pi connects using the WiFi adapter as it boots up.
-
-### Restart Wi-Fi Network
-
-```Shell
-$sudo ./config-wifi restart
-```
-
-### Setup Jetty Server
+### 6. Jetty Server Installation
 
 Just simply run the script
 
 ```Shell
-$sudo ./install-jetty
+  $sudo ./install-jetty
 ```
-
-### Check/Start Web Server
 
 You can check Jetty service with:
 
 ```Shell
-$sudo service jetty status
+  $sudo service jetty status
 ```
 
 If it is not running, then start:
 
 ```Shell
-$sudo service jetty start
+  $sudo service jetty start
 ```
 
-### Deploy Java Web App
+### 7. Deploy Java Web App
 
-Run command
+Run the script
 
 ```Shell
-$sudo ./install-app -l [webapp-download-link] -n [webapp-name]
+  $sudo ./install-app -l [webapp-download-link] -n [webapp-name]
 ```
