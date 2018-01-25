@@ -31,7 +31,7 @@ main()
     # Java install
     echo "Java is not installed yet."
     echo "Installing Java ..."
-    apt-get update && sudo apt-get install oracle-java8-jdk
+    apt-get update && apt-get install oracle-java8-jdk
     if [ $? != 0 ]; then                   
       echo "Failed to Java 8: $?"
       exit 1

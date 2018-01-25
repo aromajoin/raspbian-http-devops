@@ -10,16 +10,13 @@ Project provides shell scripts that allow setting up Wi-Fi network, Jetty web se
 - Hardware: Raspberry Pi
 - OS: Raspbian Stretch Lite
 
-## Prerequisite
+## Wi-Fi Module Product Deployment Process
 
-1. Download and install Raspbian OS image on Raspberry Pi by following [this official guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+### 1. Download and install Raspbian OS image on Raspberry Pi by following [this official guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
-2. Connect Raspberry to the internet using Ethernet cable or WiFi (it needs to setup via command line.)
+### 2. Config SSH access - Only RaspberryPi Zero
 
-We will use shell scripts to make the installation and setting up steps easier. They can be grabbed by one of two following ways.
-
-### 1. Via SSH with SCP commands
-
+- If you are using RaspberryPi Zero, to enable accessing SSH 
 - Boot up RaspberryPi
 - Access/Check SSH via `pi@raspberry.local`
 - Copy all scripts from local to RaspberryPi
