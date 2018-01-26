@@ -3,7 +3,7 @@
 ## Purposes
 
 Setting up production environment automatically for Java web application on Raspbian Stretch Lite.
-Project provides shell scripts that allow setting up Wi-Fi network, Jetty web server and deploy Java web app.
+Project provides shell scripts that allow to setting up Wi-Fi network, Jetty web server and deploy Java web app.
 
 ## Production environment
 
@@ -14,10 +14,10 @@ Project provides shell scripts that allow setting up Wi-Fi network, Jetty web se
 
 ### 1. Download and install Raspbian OS image on Raspberry Pi by following [this official guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
-### 2. Config SSH access - Only RaspberryPi Zero
+### 2. Config SSH Access
 
 - With RaspberryPi Zero, you might need to read the guides [here.](/ssh-to-raspberry-via-usb.md)
-- With RaspberryPi 3 Model, open up the boot partition and create a new file simply called `ssh` in the SD card. By default SSH is disabled so this is required to enable it.
+- With RaspberryPi 3 Model, open up the boot partition and create a new empty file simply called `ssh` in the SD card. By default SSH is disabled so this is required to enable it.
 - Check SSH via `pi@raspberry.local` with default password `raspberry`
 
 ### 3. Copy all scripts from local to RaspberryPi with SCP command
