@@ -10,7 +10,7 @@ Project provides shell scripts that allow to setting up Wi-Fi network, Jetty web
 - Hardware: Raspberry Pi
 - OS: Raspbian Stretch Lite
 
-## Wi-Fi Module Deployment Process From Using Scripts
+## Deployment Process From Using Scripts
 
 ### 1. Download and install Raspbian OS image on Raspberry Pi by following [this official guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
@@ -101,3 +101,15 @@ It take about 20 minutes.
 ```Shell
   $gunzip --stdout ~/raspbian.img.gz | sudo dd bs=4M of=/dev/sdb
 ```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at [Raspbian HTTP DevOps project](https://github.com/aromajoin/raspbian-http-devops/). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Code of Conduct
+
+Everyone interacting in the RaspbianHttpDevOps project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/aromajoin/raspbian-http-devops/blob/master/CODE_OF_CONDUCT.md).
+
+## LICENSE
+
+RaspbianHttpDevOps is released under the [Apache License](/LICENSE).
