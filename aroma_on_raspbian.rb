@@ -15,7 +15,8 @@ completion =
       puts "Available commands:\n" + CMDS.join("\t").to_s
     when Readline.line_buffer =~ /config-wifi.*/i
       puts 'Setup wifi network...'
-      `lib/config-wifi`
+      param = Readline.line_buffer.split(' ')[1]
+      `lib/config-wifi #{param}`
     when Readline.line_buffer =~ /install-app.*/i
       puts 'Installing web app...'
       `lib/install-app`
