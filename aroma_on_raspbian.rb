@@ -16,17 +16,18 @@ completion =
     when Readline.line_buffer =~ /config-wifi.*/i
       puts 'Setup wifi network...'
       param = Readline.line_buffer.split(' ')[1]
-      `lib/config-wifi #{param}`
+      `src/config-wifi #{param}`
     when Readline.line_buffer =~ /install-app.*/i
       puts 'Installing web app...'
-      `lib/install-app`
+      `src/install-app`
     when Readline.line_buffer =~ /hello.*/i
       puts 'Hello, Welcome to Aromajoin!'
     when Readline.line_buffer =~ /install-jetty.*/i
       puts 'Installing Jetty server...'
-      `lib/install-jetty`
+      `src/install-jetty`
     when Readline.line_buffer =~ /exit.*/i
       puts 'Exiting...'
+      puts 'Thanks, see you later.'
       exit 0
     else
       CMDS.grep(/^#{Regexp.escape(str)}/i) unless str.nil?
