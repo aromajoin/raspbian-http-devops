@@ -7,11 +7,6 @@ WIFI_INTERFACE_FILE=/etc/network/interfaces
 
 HIDDEN=0
 
-WIFI_CREDENTIAL="network={
-  ssid=\"$SSID\"
-  psk=\"$PASSWORD\"
-  scan_ssid=$HIDDEN\\n}"
-
 WIFI_CONFIG_FILE_URL=/etc/wpa_supplicant/wpa_supplicant.conf
 
 # IP for the checking server
@@ -60,7 +55,7 @@ setup () {
   echo "Enter your WiFi configuration"
   read -p 'Network name (SSID): ' SSID
   read -sp 'Password: ' PASSWORD
-  echo
+  echo ""
   read -p "Is it a hidden network? [y/n]" RESPONSE
 
   if [ "$RESPONSE" = "y" ]; then
@@ -70,6 +65,13 @@ setup () {
     # Discoverable network
     HIDDEN=0
   fi
+
+  WIFI_CREDENTIAL="network={
+    ssid=\"$SSID\"
+    psk=\"$PASSWORD\"
+    scan_ssid=$HIDDEN\\n}"
+
+  echo -e "$WIFI_CREDENTIAL"
 
   # Put configuration into network config file.
   # Raspberry Pi will read these configuration data to connect to the network.
