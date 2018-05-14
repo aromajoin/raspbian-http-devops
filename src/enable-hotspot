@@ -4,6 +4,7 @@ $HOSTAPD_CONFIG_FILE_PATH = /etc/hostapd/hostapd.conf
 $HOSTAPD_DEFAULT_CONFIG_PATH = /etc/hostapd/hostapd
 $DNSMASQ_CONFIG_PATH = /etc/dnsmasq.conf
 $AUTO_HOTSPOT_SERVICE_PATH = /etc/systemd/system/autohotspot.service
+$AUTO_HOTSPOT_SCRIPT_PATH = /home/pi/rpizero-hotspot
 
 hostapd_config()
 {
@@ -46,7 +47,7 @@ autohotspot_service()
     [Service]
     Type=oneshot
     RemainAfterExit=yes
-    ExecStart=/home/pi/rpizero-hotspot
+    ExecStart=$AUTO_HOTSPOT_SCRIPT_PATH
     [Install]
     WantedBy=multi-user.target"
   
