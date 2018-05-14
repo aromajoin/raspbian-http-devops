@@ -1,7 +1,7 @@
 #!/bin/bash
 
 $HOSTAPD_CONFIG_FILE_PATH = /etc/hostapd/hostapd.conf
-$HOSTAPD_DEFAULT_CONFIG_PATH = /etc/hostapd/hostapd
+$HOSTAPD_DEFAULT_CONFIG_PATH = /etc/default/hostapd
 $DNSMASQ_CONFIG_PATH = /etc/dnsmasq.conf
 $AUTO_HOTSPOT_SERVICE_PATH = /etc/systemd/system/autohotspot.service
 $AUTO_HOTSPOT_SCRIPT_PATH = /home/pi/rpizero-hotspot
