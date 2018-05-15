@@ -45,7 +45,8 @@ dnsmasq_config()
   bind-interfaces 
   dhcp-range=10.0.0.50,10.0.0.150,12h"
   echo -e "$DNSMASQ_CONFIG"
-  echo -e "$DNSMASQ_CONFIG" > $DNSMASQ_CONFIG_PATH
+  echo "" >> $DNSMASQ_CONFIG_PATH
+  echo -e "$DNSMASQ_CONFIG" >> $DNSMASQ_CONFIG_PATH
 
   if [ $? != 0 ]; then
     echo "Failed to setup. Try it again."
