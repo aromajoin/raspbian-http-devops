@@ -1,16 +1,14 @@
 #!/bin/bash
 MODE=$1
+SSID=$2
+PASSWORD=$3
+HIDDEN=$4
 
 INTERFACE="wlan0"
 
 WIFI_INTERFACE_FILE=/etc/network/interfaces
 
-HIDDEN=0
-
-WIFI_CREDENTIAL="network={
-  ssid=\"$SSID\"
-  psk=\"$PASSWORD\"
-  scan_ssid=$HIDDEN\\n}"
+#HIDDEN=0
 
 WIFI_CONFIG_FILE_URL=/etc/wpa_supplicant/wpa_supplicant.conf
 
@@ -57,35 +55,50 @@ init () {
 # Setup wifi
 setup () {
   # Ask user to input information
-  echo "Enter your WiFi configuration"
-  read -p 'Network name (SSID): ' SSID
-  read -sp 'Password: ' PASSWORD
-  echo
-  read -p "Is it a hidden network? [y/n]" RESPONSE
+  # echo "Enter your WiFi configuration"
+  # read -p 'Network name (SSID): ' SSID
+  # read -sp 'Password: ' PASSWORD
+  # echo ""
+  # read -p "Is it a hidden network? [y/n]" RESPONSE
 
-  if [ "$RESPONSE" = "y" ]; then
+  # if [ "$RESPONSE" = "y" ]; then
     # Hidden network
-    HIDDEN=1
-  else
+    # HIDDEN=1
+  # else
     # Discoverable network
-    HIDDEN=0
-  fi
+    # HIDDEN=0
+  # fi
+  
+  #echo "setup"
+	if [ ! -z "$SSID" -a "$SSID" != " " ] && [ ! -z "$PASSWORD" -a "$PASSWORD" != " " ] && [ ! -z "$HIDDEN" -a "$HIDDEN" != " " ] && [ "$HIDDEN" -eq "0" -o "$HIDDEN" -eq "1" ]
+	then
 
-  # Put configuration into network config file.
-  # Raspberry Pi will read these configuration data to connect to the network.
-  echo "country=JP" > $WIFI_CONFIG_FILE_URL
-  echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev" >> $WIFI_CONFIG_FILE_URL
-  echo "update_config=1" >> /$WIFI_CONFIG_FILE_URL
-  echo "ap_scan=1" >> $WIFI_CONFIG_FILE_URL
-  echo >> $WIFI_CONFIG_FILE_URL
+		WIFI_CREDENTIAL="network={
+		ssid=\"$SSID\"
+		psk=\"$PASSWORD\"
+		scan_ssid=$HIDDEN\\n}"
 
-  echo -e "$WIFI_CREDENTIAL" >> $WIFI_CONFIG_FILE_URL
+		echo -e "$WIFI_CREDENTIAL"
 
-  if [ $? != 0 ]; then
-    echo "Failed to setup. Try it again."
-  else
-    echo "Connect successfully."
-  fi
+		# Put configuration into network config file.
+		# Raspberry Pi will read these configuration data to connect to the network.
+		echo "country=JP" > $WIFI_CONFIG_FILE_URL
+		echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev" >> $WIFI_CONFIG_FILE_URL
+		echo "update_config=1" >> /$WIFI_CONFIG_FILE_URL
+		echo "ap_scan=1" >> $WIFI_CONFIG_FILE_URL
+		echo >> $WIFI_CONFIG_FILE_URL
+
+		echo -e "$WIFI_CREDENTIAL" >> $WIFI_CONFIG_FILE_URL
+
+		if [ $? != 0 ]; then
+			echo "Failed to setup. Try it again."
+		else
+			echo "Connect successfully."
+		fi
+	
+	else
+		echo "Usage: ./config-wifi setup [BSSID] [PASSWORD] [HIDDEN(1/0)]"
+	fi
 }
 
 # Restart WiFi
