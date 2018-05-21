@@ -82,6 +82,18 @@ autohotspot_service()
   fi
 }
 
+hotspot_crobtab()
+{
+  # create current crontab
+  crontab -l > hotspotcron
+  # push cron task content
+  echo "*/5 * * * * sudo $AUTO_HOTSPOT_SCRIPT_PATH >/dev/null 2>&1" >> hotspotcron
+  # install new cron file
+  crontab hotspotcron
+  # remove temp cron file
+  rm hotspotcron
+}
+
 main()
 {
   echo "[Update] Raspbian OS with latest updates..."
@@ -109,6 +121,9 @@ main()
   echo "[Update] required software..."
   apt-get purge dns-root-data
   apt-get install iw
+
+  echo "[Install] Hotspot crontab..."
+  hotspot_crobtab
 
   echo "DONE."
 }
