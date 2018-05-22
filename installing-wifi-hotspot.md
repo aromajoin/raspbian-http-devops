@@ -1,15 +1,20 @@
 # Installing Wi-Fi Hotspot on Raspberry Pi Zero W
 
-## Download scripts
+## 1.Access Raspberry Pi via SSH
 
-Download two scripts from the online server following URLs:
+## 2.Download required scripts
 
-* [enable-hotspot script](https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/enable-hotspot)
-* [rpizero-hotspot script](https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/rpizero-hotspot)
+From Raspberry terminal
 
-Then put them into Raspberry Pi's SDCard under `/home/pi/` folder. Put back SDCard and restart Raspberry Pi.
+```Shell
+  $cd ~
+  $curl -O https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/enable-hotspot
+  $curl -O https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/rpizero-hotspot
+```
 
-## Excute enable hotspot script
+Make sure these scripts are downloaded under under `/home/pi/` folder.
+
+## 3.Make excutable hotspot scripts
 
 Go to `/home/pi/` folder and run the commands
 
@@ -17,4 +22,10 @@ Go to `/home/pi/` folder and run the commands
   $sudo chmod +x ./enable-hotspot
   $sudo chmod +x ./rpizero-hotspot
   $./enable-hotspot
+```
+
+## 4.Reboot Raspberry Pi
+
+```Shell
+  $sudo reboot
 ```
