@@ -12,7 +12,7 @@ From Raspberry terminal
   $curl -O https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/rpizero-hotspot
 ```
 
-Make sure these scripts are downloaded under under `/home/pi/` folder.
+Make sure these scripts are downloaded under `/home/pi/` folder.
 
 ## 3.Make excutable hotspot scripts
 
