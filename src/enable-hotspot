@@ -74,6 +74,7 @@ autohotspot_service()
 
   echo "[Update] Enable auto-hotspot service..."
   systemctl enable autohotspot.service
+  systemctl start autohotspot.service
 
   if [ $? != 0 ]; then
     echo "Failed to setup. Try it again."
