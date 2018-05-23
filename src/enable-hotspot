@@ -1,9 +1,10 @@
 #!/bin/bash
 
-HOTSPOT_NAME=ASN1WA0001
+HOTSPOT_NAME=ASN1WA0001-Hotspot
 HOSTAPD_CONFIG_FILE_PATH=/etc/hostapd/hostapd.conf
 HOSTAPD_DEFAULT_CONFIG_PATH=/etc/default/hostapd
 DNSMASQ_CONFIG_PATH=/etc/dnsmasq.conf
+DHCPCD_CONFIG_PATH=/etc/dhcpcd.conf
 AUTO_HOTSPOT_SERVICE_PATH=/etc/systemd/system/autohotspot.service
 AUTO_HOTSPOT_SCRIPT_PATH=/home/pi/rpizero-hotspot
 
@@ -13,7 +14,7 @@ hostapd_config()
   driver=nl80211
   ssid=$HOTSPOT_NAME
   hw_mode=g
-  channel=6
+  channel=8
   wmm_enabled=0
   macaddr_acl=0
   auth_algs=1
@@ -22,7 +23,10 @@ hostapd_config()
   wpa_passphrase=1234567890
   wpa_key_mgmt=WPA-PSK
   wpa_pairwise=TKIP
-  rsn_pairwise=CCMP"
+  rsn_pairwise=CCMP
+  country_code=JP
+  ieee80211n=1
+  ieee80211d=1"
 
   echo -e "$HOSTAPD_CONFIG"
   echo -e "$HOSTAPD_CONFIG" > $HOSTAPD_CONFIG_FILE_PATH
@@ -49,6 +53,20 @@ dnsmasq_config()
   echo "" >> $DNSMASQ_CONFIG_PATH
   echo -e "$DNSMASQ_CONFIG" >> $DNSMASQ_CONFIG_PATH
 
+  if [ $? != 0 ]; then
+    echo "Failed to setup. Try it again."
+    exit 1
+  else
+    echo "Success."
+  fi
+}
+
+dhcpcd_config()
+{
+  DHCPCD_CONFIG="nohook wpa_supplicant"
+  echo -e "$DHCPCD_CONFIG"
+  echo "" >> $DHCPCD_CONFIG_PATH
+  echo -e "$DHCPCD_CONFIG" >> $DHCPCD_CONFIG_PATH
   if [ $? != 0 ]; then
     echo "Failed to setup. Try it again."
     exit 1
@@ -116,6 +134,9 @@ main()
 
   echo "[Add] Dnsmasq configuration..."
   dnsmasq_config
+
+  echo "[Add] DHCPCD configuration..."
+  dhcpcd_config
 
   echo "[Add] Autohotspot service..."
   autohotspot_service
