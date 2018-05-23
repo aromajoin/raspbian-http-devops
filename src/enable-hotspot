@@ -3,6 +3,7 @@
 COUNTRY_CODE=JP
 HOTSPOT_NAME=ASN1WA0001-Hotspot
 HOTSPOT_PASS=1234567890
+
 HOSTAPD_CONFIG_FILE_PATH=/etc/hostapd/hostapd.conf
 HOSTAPD_DEFAULT_CONFIG_PATH=/etc/default/hostapd
 DNSMASQ_CONFIG_PATH=/etc/dnsmasq.conf
@@ -12,26 +13,26 @@ AUTO_HOTSPOT_SCRIPT_PATH=/home/pi/rpizero-hotspot
 
 hostapd_config()
 {
-  HOSTAPD_CONFIG="interface=wlan0
-  driver=nl80211
-  ssid=$HOTSPOT_NAME
-  hw_mode=g
-  channel=8
-  wmm_enabled=0
-  macaddr_acl=0
-  auth_algs=1
-  ignore_broadcast_ssid=0
-  wpa=2
-  wpa_passphrase=$HOTSPOT_PASS
-  wpa_key_mgmt=WPA-PSK
-  wpa_pairwise=TKIP
-  rsn_pairwise=CCMP
-  country_code=$COUNTRY_CODE
-  ieee80211n=1
-  ieee80211d=1"
-
-  echo -e "$HOSTAPD_CONFIG"
-  echo -e "$HOSTAPD_CONFIG" > $HOSTAPD_CONFIG_FILE_PATH
+  echo "" > $HOSTAPD_CONFIG_FILE_PATH
+  echo "interface=wlan0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "driver=nl80211" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ssid=$HOTSPOT_NAME" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "hw_mode=g" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "channel=8" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wmm_enabled=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "macaddr_acl=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "auth_algs=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ignore_broadcast_ssid=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa=2" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_passphrase=$HOTSPOT_PASS" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_key_mgmt=WPA-PSK" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_pairwise=TKIP" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "rsn_pairwise=CCMP" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "country_code=$COUNTRY_CODE" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ieee80211n=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ieee80211d=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  cat $HOSTAPD_CONFIG_FILE_PATH
 
   echo "DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" > $HOSTAPD_DEFAULT_CONFIG_PATH
 
@@ -45,15 +46,24 @@ hostapd_config()
 
 dnsmasq_config()
 {
-  DNSMASQ_CONFIG="#AutoHotspot Config #stop DNSmasq from using resolv.conf
+  DNSMASQ_CONFIG="
+  #AutoHotspot Config
+  #stop DNSmasq from using resolv.conf
   no-resolv
   #Interface to use 
   interface=wlan0 
   bind-interfaces 
   dhcp-range=10.0.0.50,10.0.0.150,12h"
   echo -e "$DNSMASQ_CONFIG"
+
   echo "" >> $DNSMASQ_CONFIG_PATH
-  echo -e "$DNSMASQ_CONFIG" >> $DNSMASQ_CONFIG_PATH
+  echo "#AutoHotspot Config" >> $DNSMASQ_CONFIG_PATH
+  echo "#stop DNSmasq from using resolv.conf" >> $DNSMASQ_CONFIG_PATH
+  echo "no-resolv" >> $DNSMASQ_CONFIG_PATH
+  echo "#Interface to use" >> $DNSMASQ_CONFIG_PATH
+  echo "interface=wlan0" >> $DNSMASQ_CONFIG_PATH
+  echo "bind-interfaces" >> $DNSMASQ_CONFIG_PATH
+  echo "dhcp-range=10.0.0.50,10.0.0.150,12h" >> $DNSMASQ_CONFIG_PATH
 
   if [ $? != 0 ]; then
     echo "Failed to setup. Try it again."
@@ -95,6 +105,7 @@ autohotspot_service()
   echo "[Update] Enable auto-hotspot service..."
   systemctl enable autohotspot.service
   systemctl start autohotspot.service
+  systemctl daemon-reload
 
   if [ $? != 0 ]; then
     echo "Failed to setup. Try it again."
