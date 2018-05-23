@@ -1,6 +1,8 @@
 #!/bin/bash
 
+COUNTRY_CODE=JP
 HOTSPOT_NAME=ASN1WA0001-Hotspot
+HOTSPOT_PASS=1234567890
 HOSTAPD_CONFIG_FILE_PATH=/etc/hostapd/hostapd.conf
 HOSTAPD_DEFAULT_CONFIG_PATH=/etc/default/hostapd
 DNSMASQ_CONFIG_PATH=/etc/dnsmasq.conf
@@ -20,11 +22,11 @@ hostapd_config()
   auth_algs=1
   ignore_broadcast_ssid=0
   wpa=2
-  wpa_passphrase=1234567890
+  wpa_passphrase=$HOTSPOT_PASS
   wpa_key_mgmt=WPA-PSK
   wpa_pairwise=TKIP
   rsn_pairwise=CCMP
-  country_code=JP
+  country_code=$COUNTRY_CODE
   ieee80211n=1
   ieee80211d=1"
 
