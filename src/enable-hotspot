@@ -1,5 +1,6 @@
 #!/bin/bash
 
+HOTSPOT_NAME=ASN1WA0001
 HOSTAPD_CONFIG_FILE_PATH=/etc/hostapd/hostapd.conf
 HOSTAPD_DEFAULT_CONFIG_PATH=/etc/default/hostapd
 DNSMASQ_CONFIG_PATH=/etc/dnsmasq.conf
@@ -10,7 +11,7 @@ hostapd_config()
 {
   HOSTAPD_CONFIG="interface=wlan0
   driver=nl80211
-  ssid=ASN1-HOTSPOT
+  ssid=$HOTSPOT_NAME
   hw_mode=g
   channel=6
   wmm_enabled=0
