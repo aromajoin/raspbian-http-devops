@@ -1,0 +1,188 @@
+#!/bin/bash
+
+COUNTRY_CODE=JP
+HOTSPOT_NAME=ASN1WA0002-Hotspot
+HOTSPOT_PASS=1234567890
+
+HOSTAPD_CONFIG_FILE_PATH=/etc/hostapd/hostapd.conf
+HOSTAPD_DEFAULT_CONFIG_PATH=/etc/default/hostapd
+DNSMASQ_CONFIG_PATH=/etc/dnsmasq.conf
+IP_FORWARDING_CONFIG_PATH=/etc/sysctl.conf
+DHCPCD_CONFIG_PATH=/etc/dhcpcd.conf
+AUTO_HOTSPOT_SERVICE_PATH=/etc/systemd/system/autohotspot.service
+AUTO_HOTSPOT_SCRIPT_PATH=/home/pi/rpi3-hotspot
+
+hostapd_config()
+{
+  echo "#2.4GHz setup wifi 80211 b,g,n" > $HOSTAPD_CONFIG_FILE_PATH
+  echo "interface=wlan0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "driver=nl80211" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ssid=$HOTSPOT_NAME" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "hw_mode=g" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "channel=8" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wmm_enabled=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "macaddr_acl=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "auth_algs=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ignore_broadcast_ssid=0" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa=2" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_passphrase=$HOTSPOT_PASS" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_key_mgmt=WPA-PSK" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "wpa_pairwise=TKIP" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "rsn_pairwise=CCMP" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "country_code=$COUNTRY_CODE" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ieee80211n=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  echo "ieee80211d=1" >> $HOSTAPD_CONFIG_FILE_PATH
+  cat $HOSTAPD_CONFIG_FILE_PATH
+
+  echo "DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" > $HOSTAPD_DEFAULT_CONFIG_PATH
+
+  if [ $? != 0 ]; then
+    echo "Failed to setup. Try it again."
+    exit 1
+  else
+    echo "Success."
+  fi
+}
+
+dnsmasq_config()
+{
+  DNSMASQ_CONFIG="
+  #AutoHotspot Config
+  #stop DNSmasq from using resolv.conf
+  no-resolv
+  #Interface to use 
+  interface=wlan0 
+  bind-dynamic
+  server=8.8.8.8
+  domain-needed
+  bogus-priv
+  dhcp-range=10.0.0.50,10.0.0.150,12h"
+  echo -e "$DNSMASQ_CONFIG"
+
+  echo "" >> $DNSMASQ_CONFIG_PATH
+  echo "#AutoHotspot Config" >> $DNSMASQ_CONFIG_PATH
+  echo "#stop DNSmasq from using resolv.conf" >> $DNSMASQ_CONFIG_PATH
+  echo "no-resolv" >> $DNSMASQ_CONFIG_PATH
+  echo "#Interface to use" >> $DNSMASQ_CONFIG_PATH
+  echo "interface=wlan0" >> $DNSMASQ_CONFIG_PATH
+  echo "bind-dynamic" >> $DNSMASQ_CONFIG_PATH
+  echo "server=8.8.8.8" >> $DNSMASQ_CONFIG_PATH
+  echo "domain-needed" >> $DNSMASQ_CONFIG_PATH
+  echo "bogus-priv" >> $DNSMASQ_CONFIG_PATH
+  echo "dhcp-range=10.0.0.50,10.0.0.150,12h" >> $DNSMASQ_CONFIG_PATH
+
+  if [ $? != 0 ]; then
+    echo "Failed to setup. Try it again."
+    exit 1
+  else
+    echo "Success."
+  fi
+}
+
+ip_forwarding()
+{
+  if grep -q '#net.ipv4.ip_forward=1' $IP_FORWARDING_CONFIG_PATH; then
+    echo '[IP Forwarding] setting...'
+    sed -i 's/.*#net.ipv4.ip_forward=1.*/net.ipv4.ip_forward=1/' $IP_FORWARDING_CONFIG_PATH
+  else
+    echo '[IP Forwarding] already setup.'
+  fi
+}
+
+dhcpcd_config()
+{
+  DHCPCD_CONFIG="nohook wpa_supplicant"
+  echo -e "$DHCPCD_CONFIG"
+  if grep -q 'nohook wpa_supplicant' $DHCPCD_CONFIG_PATH; then
+    echo "Already setup."
+  else
+    echo "" >> $DHCPCD_CONFIG_PATH
+    echo -e "$DHCPCD_CONFIG" >> $DHCPCD_CONFIG_PATH
+    if [ $? != 0 ]; then
+      echo "Failed to setup. Try it again."
+      exit 1
+    else
+      echo "Success."
+    fi
+  fi
+}
+
+autohotspot_service()
+{
+  AUTO_HOTSPOT_SERVICE="[Unit]
+  Description=Automatically generates an internet Hotspot when a valid ssid is not in range 
+  After=multi-user.target
+  [Service]
+  Type=oneshot
+  RemainAfterExit=yes
+  ExecStart=$AUTO_HOTSPOT_SCRIPT_PATH
+  [Install]
+  WantedBy=multi-user.target"
+
+  echo -e "$AUTO_HOTSPOT_SERVICE"
+  echo -e "$AUTO_HOTSPOT_SERVICE" > $AUTO_HOTSPOT_SERVICE_PATH
+
+  echo "[Update] Enable auto-hotspot service..."
+  systemctl enable autohotspot.service
+  systemctl start autohotspot.service
+  systemctl daemon-reload
+
+  if [ $? != 0 ]; then
+    echo "Failed to setup. Try it again."
+    exit 1
+  else
+    echo "Success."
+  fi
+}
+
+hotspot_crobtab()
+{
+  # create current crontab
+  crontab -l > hotspotcron
+  # push cron task content
+  echo "*/5 * * * * sudo $AUTO_HOTSPOT_SCRIPT_PATH >/dev/null 2>&1" >> hotspotcron
+  # install new cron file
+  crontab hotspotcron
+  # remove temp cron file
+  rm hotspotcron
+}
+
+main()
+{
+  echo "[Update] Raspbian OS with latest updates..."
+  apt-get update
+  apt-get upgrade
+
+  echo "[Install] Hostapd package..."
+  apt-get install hostapd
+  echo "[Install] Dnsmasq package..."
+  apt-get install dnsmasq
+
+  echo "[Update] disable automatic startup service..."
+  systemctl disable hostapd
+  systemctl disable dnsmasq
+
+  echo "[Add] Hostapd configuration..."
+  hostapd_config
+
+  echo "[Add] Dnsmasq configuration..."
+  dnsmasq_config
+
+  echo "[Add] DHCPCD configuration..."
+  dhcpcd_config
+
+  echo "[Add] Autohotspot service..."
+  autohotspot_service
+
+  echo "[Update] required software..."
+  apt-get purge dns-root-data
+  apt-get install iw
+
+  echo "[Install] Hotspot crontab..."
+  hotspot_crobtab
+
+  echo "DONE."
+}
+
+main

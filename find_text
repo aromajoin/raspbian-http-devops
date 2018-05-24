@@ -1,0 +1,8 @@
+if grep -q '#net.ipv4.ip_forward=1' test.conf; then 
+  echo ''
+  echo 'found'
+  sed -i 's/.*#net.ipv4.ip_forward=1.*/net.ipv4.ip_forward=1/' test.conf
+else
+  echo ''
+  echo 'not found'
+fi

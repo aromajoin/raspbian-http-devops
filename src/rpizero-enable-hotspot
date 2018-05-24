@@ -13,7 +13,7 @@ AUTO_HOTSPOT_SCRIPT_PATH=/home/pi/rpizero-hotspot
 
 hostapd_config()
 {
-  echo "" > $HOSTAPD_CONFIG_FILE_PATH
+  echo "#2.4GHz setup wifi 80211 b,g,n" > $HOSTAPD_CONFIG_FILE_PATH
   echo "interface=wlan0" >> $HOSTAPD_CONFIG_FILE_PATH
   echo "driver=nl80211" >> $HOSTAPD_CONFIG_FILE_PATH
   echo "ssid=$HOTSPOT_NAME" >> $HOSTAPD_CONFIG_FILE_PATH
