@@ -57,7 +57,7 @@ dnsmasq_config()
   server=8.8.8.8
   domain-needed
   bogus-priv
-  dhcp-range=10.0.0.50,10.0.0.150,12h"
+  dhcp-range=192.168.50.150,192.168.50.200,255.255.255.0,12h"
   echo -e "$DNSMASQ_CONFIG"
 
   if grep -q '#AutoHotspot Config' $DNSMASQ_CONFIG_PATH; then
@@ -73,7 +73,7 @@ dnsmasq_config()
     echo "server=8.8.8.8" >> $DNSMASQ_CONFIG_PATH
     echo "domain-needed" >> $DNSMASQ_CONFIG_PATH
     echo "bogus-priv" >> $DNSMASQ_CONFIG_PATH
-    echo "dhcp-range=10.0.0.50,10.0.0.150,12h" >> $DNSMASQ_CONFIG_PATH
+    echo "dhcp-range=192.168.50.150,192.168.50.200,255.255.255.0,12h" >> $DNSMASQ_CONFIG_PATH
 
     if [ $? != 0 ]; then
       echo "Failed to setup. Try it again."
