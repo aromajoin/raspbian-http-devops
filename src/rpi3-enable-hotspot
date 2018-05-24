@@ -60,7 +60,7 @@ dnsmasq_config()
   dhcp-range=10.0.0.50,10.0.0.150,12h"
   echo -e "$DNSMASQ_CONFIG"
 
-  if grep -q '#AutoHotspot Config' $IP_FORWARDING_CONFIG_PATH; then
+  if grep -q '#AutoHotspot Config' $DNSMASQ_CONFIG_PATH; then
     echo "Dnsmasq already setup."
   else
     echo "" >> $DNSMASQ_CONFIG_PATH
@@ -176,8 +176,8 @@ main()
   echo "[Add] IP forwarding configuration..."
   ip_forwarding
 
-  echo "[Add] DHCPCD configuration..."
-  dhcpcd_config
+  #echo "[Add] DHCPCD configuration..."
+  #dhcpcd_config
 
   echo "[Add] Autohotspot service..."
   autohotspot_service

@@ -56,20 +56,24 @@ dnsmasq_config()
   dhcp-range=10.0.0.50,10.0.0.150,12h"
   echo -e "$DNSMASQ_CONFIG"
 
-  echo "" >> $DNSMASQ_CONFIG_PATH
-  echo "#AutoHotspot Config" >> $DNSMASQ_CONFIG_PATH
-  echo "#stop DNSmasq from using resolv.conf" >> $DNSMASQ_CONFIG_PATH
-  echo "no-resolv" >> $DNSMASQ_CONFIG_PATH
-  echo "#Interface to use" >> $DNSMASQ_CONFIG_PATH
-  echo "interface=wlan0" >> $DNSMASQ_CONFIG_PATH
-  echo "bind-interfaces" >> $DNSMASQ_CONFIG_PATH
-  echo "dhcp-range=10.0.0.50,10.0.0.150,12h" >> $DNSMASQ_CONFIG_PATH
-
-  if [ $? != 0 ]; then
-    echo "Failed to setup. Try it again."
-    exit 1
+  if grep -q '#AutoHotspot Config' $DNSMASQ_CONFIG_PATH; then
+    echo "Dnsmasq already setup."
   else
-    echo "Success."
+    echo "" >> $DNSMASQ_CONFIG_PATH
+    echo "#AutoHotspot Config" >> $DNSMASQ_CONFIG_PATH
+    echo "#stop DNSmasq from using resolv.conf" >> $DNSMASQ_CONFIG_PATH
+    echo "no-resolv" >> $DNSMASQ_CONFIG_PATH
+    echo "#Interface to use" >> $DNSMASQ_CONFIG_PATH
+    echo "interface=wlan0" >> $DNSMASQ_CONFIG_PATH
+    echo "bind-interfaces" >> $DNSMASQ_CONFIG_PATH
+    echo "dhcp-range=10.0.0.50,10.0.0.150,12h" >> $DNSMASQ_CONFIG_PATH
+
+    if [ $? != 0 ]; then
+      echo "Failed to setup. Try it again."
+      exit 1
+    else
+      echo "Success."
+    fi
   fi
 }
 
@@ -77,13 +81,17 @@ dhcpcd_config()
 {
   DHCPCD_CONFIG="nohook wpa_supplicant"
   echo -e "$DHCPCD_CONFIG"
-  echo "" >> $DHCPCD_CONFIG_PATH
-  echo -e "$DHCPCD_CONFIG" >> $DHCPCD_CONFIG_PATH
-  if [ $? != 0 ]; then
-    echo "Failed to setup. Try it again."
-    exit 1
+  if grep -q 'nohook wpa_supplicant' $DHCPCD_CONFIG_PATH; then
+    echo "Already setup."
   else
-    echo "Success."
+    echo "" >> $DHCPCD_CONFIG_PATH
+    echo -e "$DHCPCD_CONFIG" >> $DHCPCD_CONFIG_PATH
+    if [ $? != 0 ]; then
+      echo "Failed to setup. Try it again."
+      exit 1
+    else
+      echo "Success."
+    fi
   fi
 }
 
