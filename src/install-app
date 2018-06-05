@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Handle option arguments
+while getopts ":l:n:" opt; do
+  case $opt in
+    l)
+      URL=$OPTARG
+      echo "Download link: $URL" >&2
+      ;;
+    n)
+      NAME=$OPTARG
+      echo "File: $NAME" >&2
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+main()
+{
+  # Read app url
+  APP_FILE_URL=${URL:-https://s3-ap-northeast-1.amazonaws.com/aromajoin-downloads/software/aroma-http-controller/aromacontroller.war}
+
+  APP_FILE=${NAME:-aromacontroller.war}
+
+  DESTINATION_FILE=$HOME/$APP_FILE
+
+  echo "Start downloading ${APP_FILE} from: ${APP_FILE_URL}"
+
+  # Download app file
+  curl "$APP_FILE_URL" -o $DESTINATION_FILE
+
+  # Move app file into the server folder
+  if [ -f "$DESTINATION_FILE" ]
+  then
+    mv $DESTINATION_FILE /opt/jetty/web/bbq/webapps/
+    chown jetty:jetty /opt/jetty/web/bbq/webapps/$APP_FILE
+  else
+    echo
+    echo "Failed to download file."
+    exit 1
+  fi
+
+  # Restart Jetty
+  echo "Restart Jetty server ..."
+  service jetty restart
+
+  if [ $? != 0 ]
+  then
+    echo "Failed to restart sever."
+    exit 1
+  fi
+
+  echo
+  echo "Completed."
+  exit 0
+}
+
+main

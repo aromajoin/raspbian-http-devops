@@ -1,1 +1,3 @@
 .vscode/
+aroma-on-raspbian-*/
+*.tar.gz
