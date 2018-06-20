@@ -80,27 +80,29 @@ After we already performed deployment completely on one RaspberryPi, it may be s
 
 ### 1. Insert the SD card in your PC using a USB or built-in card reader. Then list all the filesystems present on your system
 
-```Shell
-  $sudo fdisk -l
-```
+    ```Shell
+      $sudo fdisk -l
+    ```
 
 ### 2. Try to find out the *device name* of the SD card. on the linux, it is something like `/dev/sdb` which has a size of the SD card
 
 ### 3. In linux, use the `dd` command to write an customed image of Raspbian OS to your hard disk
 
-To compress, you can pipe the output of `dd` to `gzip` to get a compressed file that is significantly smaller than the original size
+    To compress, you can pipe the output of `dd` to `gzip` to get a compressed file that is significantly smaller than the original size
 
-```Shell
-  $sudo dd bs=4M if=/dev/sdb | gzip > ~/http_raspbian.img.gz
-```
+    ```Shell
+      $sudo dd bs=4M if=/dev/sdb | gzip > ~/http_raspbian.img.gz
+    ```
 
-### 4. To restore, pipe the output of `gunzip` to `dd`, for example
+### 4. To restore image
 
-It take about 20 minutes.
+    If it is brand new SD card, then firstly flash it with latest Raspbian Stretch Lite OS.
 
-```Shell
-  $gunzip --stdout ~/raspbian.img.gz | sudo dd bs=4M of=/dev/sdb
-```
+    Secondly, pipe the output of `gunzip` to `dd`, it take about 20 minutes.
+
+    ```Shell
+      $gunzip --stdout ~/raspbian.img.gz | sudo dd bs=4M of=/dev/sdb
+    ```
 
 ## Contributing
 
